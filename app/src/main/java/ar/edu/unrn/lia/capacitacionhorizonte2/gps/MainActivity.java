@@ -1,6 +1,7 @@
-package ar.edu.unrn.lia.capacitacionhorizonte2;
+package ar.edu.unrn.lia.capacitacionhorizonte2.gps;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import ar.edu.unrn.lia.capacitacionhorizonte2.R;
+import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
