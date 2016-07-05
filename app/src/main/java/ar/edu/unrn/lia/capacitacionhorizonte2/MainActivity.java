@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        gotoCurrentLoactionGooglePlayService();
+        createLocationRequest();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
-        gotoCurrentLoactionGooglePlayService();
+
     }
 
     @Override
@@ -95,6 +98,21 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGoogleApiClient.isConnected()){
+            startLocationUpdate();
+        }
+
+    }
+
     private void gotoCurrentLoactionGooglePlayService() {
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -109,24 +127,39 @@ public class MainActivity extends AppCompatActivity implements
     public void onConnected(@Nullable Bundle bundle) {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-              return;
+            return;
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-           // LatLng latLng = new LatLng(mLocationRequest.getLatitude(),mLocationRequest.getLongitude());
-           // mMap.addMarker(new MarkerOptions().position(latLng).title("Programmatically Current Loaction"));
-           // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            Toast.makeText(this,"getLatitude() = "+String.valueOf(mLocation.getLatitude())+"\n getLongitude() = "+String.valueOf(mLocation.getLongitude()), Toast.LENGTH_LONG).show();
+            // LatLng latLng = new LatLng(mLocationRequest.getLatitude(),mLocationRequest.getLongitude());
+            // mMap.addMarker(new MarkerOptions().position(latLng).title("Programmatically Current Loaction"));
+            // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            Toast.makeText(this, "getLatitude() = " + String.valueOf(mLocation.getLatitude()) + "\n getLongitude() = " + String.valueOf(mLocation.getLongitude()), Toast.LENGTH_LONG).show();
         }
 
+        startLocationUpdate();
+
+    }
+
+
+    private void createLocationRequest() {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); // Update location every second
         mLocationRequest.setSmallestDisplacement(20);
+    }
 
+    private void startLocationUpdate() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                 return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
+    private void stopLocationUpdate() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
 
     @Override
     public void onConnectionSuspended(int i) {
