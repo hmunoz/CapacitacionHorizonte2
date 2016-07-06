@@ -7,15 +7,16 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,6 +27,8 @@ import com.google.android.gms.location.LocationServices;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -34,6 +37,12 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private static final String TAG = MainActivity.class.getCanonicalName();
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.content_main)
+    ConstraintLayout container;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
 
     private GoogleApiClient mGoogleApiClient = null;
@@ -45,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -59,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements
                         .setAction("Action", null).show();
             }
         });
-
 
 
     }
@@ -112,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (mGoogleApiClient.isConnected()){
+        if (mGoogleApiClient.isConnected()) {
             startLocationUpdate();
         }
 
@@ -157,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements
     private void startLocationUpdate() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                 return;
+            return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
@@ -180,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onLocationChanged(Location location) {
 
 
-        Toast.makeText(this,"Location received: " + location.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Location received: " + location.toString(), Toast.LENGTH_LONG).show();
 
     }
 

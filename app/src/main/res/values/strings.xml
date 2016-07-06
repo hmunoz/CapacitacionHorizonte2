@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CapacitacionHorizonte2</string>
+    <string name="app_name">Capacitacion Horizonte Clase 2</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Configuracion</string>
     <string name="user_name">Nombre de Usuario</string>
@@ -8,39 +8,29 @@
     <string name="listSummary">Lista referencias</string>
     <string name="dialogTitle">Seleccione un valor</string>
     <string name="flight_sort_option_default_value">0</string>
+    <string name="pref_user_name_title">Nombre de Usuario</string>
+    <string name="ref_user_name_summary">Usuario de Sistema</string>
+    <string name="pref_alert_email_title">Envio de Email?</string>
+    <string name="ref_alert_email_adress_title">Email de Envio</string>
+    <string name="pref_list_multi">Lista Multiple</string>
+    <string name="pref_general_title">Configuracion de la Aplicacion</string>
 
 
-    <string-array name="flight_sort_options">
-        <item>Total Cost</item>
-        <item># of Stops</item>
-        <item>Airline</item>
-    </string-array>
-    <string-array name="pizza_toppings">
-        <item>Cheese</item>
-        <item>Pepperoni</item>
-        <item>Onions</item>
-        <item>Portabello Mushrooms</item>
-        <item>Black Olives</item>
-        <item>Smoked Ham</item>
-        <item>Pineapple</item>
-    </string-array>
-
-    <string-array name="flight_sort_options_values">
+    <string-array name="list_option_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="pizza_toppings_values">
-        <item>cheese</item>
-        <item>pepperoni</item>
-        <item>onion</item>
-        <item>mushroom</item>
-        <item>olive</item>
-        <item>ham</item>
-        <item>pineapple</item>
+
+    <string-array name="list_option">
+        <item>Primera Opcion</item>
+        <item>Segunda Opcion</item>
+        <item>Tercera Opcion</item>
     </string-array>
-    <string-array name="default_pizza_toppings">
-        <item>cheese</item>
-        <item>pepperoni</item>
+
+
+
+    <string-array name="default_list_option">
+        <item>0</item>
     </string-array>
 </resources>

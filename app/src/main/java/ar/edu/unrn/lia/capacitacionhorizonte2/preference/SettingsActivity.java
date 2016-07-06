@@ -4,13 +4,16 @@ package ar.edu.unrn.lia.capacitacionhorizonte2.preference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class SettingsActivity extends  PreferenceActivity
@@ -21,16 +24,23 @@ public class SettingsActivity extends  PreferenceActivity
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingFragment()).commit();
 
-        checkValues();
+        //checkValues();
     }
 
     public static class SettingFragment extends PreferenceFragment
     {
+
+        @BindView(R.id.user_name)
+        EditTextPreference userName;
+
         @Override
         public void onCreate(final Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.main);
+
+
+
         }
     }
 
