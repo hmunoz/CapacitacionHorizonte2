@@ -9,7 +9,6 @@ import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 
@@ -36,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.main);
+            addPreferencesFromResource(R.xml.preference);
 
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
