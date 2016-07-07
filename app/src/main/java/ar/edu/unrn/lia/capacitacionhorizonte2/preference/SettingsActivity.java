@@ -26,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+
         private static final String TAG = SettingFragment.class.getSimpleName();
 
         SharedPreferences sharedPreferences;
