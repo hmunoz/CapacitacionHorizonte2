@@ -1,49 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This file is /res/xml/main.xml -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?><!-- This file is /res/xml/main.xml -->
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-		<PreferenceCategory
-			android:title="@string/pref_general_title"
-			android:icon="@drawable/ic_notifications_black_24dp">
-
-
-			<EditTextPreference
-				android:id="@+id/user_name"
-				android:key="user_name"
-				android:title="@string/pref_user_name_title"
-				android:summary="@string/ref_user_name_summary"/>
-
-			<CheckBoxPreference
-				android:key="alert_email"
-				android:title="@string/pref_alert_email_title" />
-
-			<EditTextPreference
-				android:key="alert_email_address"
-				android:inputType="textEmailAddress"
-				android:layout="?android:attr/preferenceLayoutChild"
-				android:title="@string/ref_alert_email_adress_title"
-				android:dependency="alert_email" />
-
-			<ListPreference
-				android:key="lista_opcion"
-				android:title="@string/listTitle"
-				android:summary="@string/listSummary"
-				android:entries="@array/list_option"
-				android:entryValues="@array/list_option_values"
-				android:dialogTitle="@string/dialogTitle"
-				android:defaultValue="@string/flight_sort_option_default_value" />
+    <android.support.v7.preference.PreferenceCategory
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/pref_general_title">
 
 
-			<MultiSelectListPreference
-				android:key="lista_opcion_multiple"
-				android:title="@string/pref_list_multi"
-				android:entries="@array/list_option"
-				android:entryValues="@array/list_option_values"
-				android:dialogTitle="@string/dialogTitle"
-				android:defaultValue="@array/default_list_option"
-				/>
+        <android.support.v7.preference.EditTextPreference
+            android:id="@+id/user_name"
+            android:key="user_name"
+            android:summary="@string/ref_user_name_summary"
+            android:title="@string/pref_user_name_title" />
 
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="alert_email"
+            android:summaryOff="Envio de Email Activido."
+            android:summaryOn="Envio de Email Desactivado."
+            android:title="@string/pref_alert_email_title" />
 
-		</PreferenceCategory>
+        <android.support.v7.preference.EditTextPreference
+            android:dependency="alert_email"
+            android:inputType="textEmailAddress"
+            android:key="alert_email_address"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:title="@string/ref_alert_email_adress_title" />
 
-</PreferenceScreen>
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="@string/flight_sort_option_default_value"
+            android:dialogTitle="@string/dialogTitle"
+            android:entries="@array/list_option"
+            android:entryValues="@array/list_option_values"
+            android:key="lista_opcion"
+            android:summary="@string/listSummary"
+            android:title="@string/listTitle" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

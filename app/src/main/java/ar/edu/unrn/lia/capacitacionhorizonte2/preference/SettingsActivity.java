@@ -3,31 +3,29 @@ package ar.edu.unrn.lia.capacitacionhorizonte2.preference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.MultiSelectListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
-
-import java.util.Set;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingFragment()).commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new SettingFragment())
+                .commit();
 
     }
 
-    public static class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class SettingFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
         private static final String TAG = SettingFragment.class.getSimpleName();
 
         SharedPreferences sharedPreferences;
@@ -42,19 +40,20 @@ public class SettingsActivity extends PreferenceActivity {
 
             PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
 
-
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.user_name_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_multiple_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.alert_email_address_key));
+        }
 
+        @Override
+        public void onCreatePreferences(Bundle bundle, String s) {
 
         }
 
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.i(TAG, "preference changed: " + key);
 
             Preference preference = findPreference(key);
             if (preference instanceof ListPreference) {
@@ -65,28 +64,6 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             } else if (preference instanceof EditTextPreference) {
                 preference.setSummary(sharedPreferences.getString(key, ""));
-            } else if (preference instanceof MultiSelectListPreference) {
-                MultiSelectListPreference pref = (MultiSelectListPreference) preference;
-                // MultiSelectList Preference
-                MultiSelectListPreference mlistPref = (MultiSelectListPreference) pref;
-                String summaryMListPref = "";
-                String and = "";
-
-                // Retrieve values
-                Set<String> values = mlistPref.getValues();
-                for (String value : values) {
-                    // For each value retrieve index
-                    int index = mlistPref.findIndexOfValue(value);
-                    // Retrieve entry from index
-                    CharSequence mEntry = index >= 0 && mlistPref.getEntries() != null ? mlistPref.getEntries()[index] : null;
-                    if (mEntry != null) {
-                        // add summary
-                        summaryMListPref = summaryMListPref + and + mEntry;
-                        and = ";";
-                    }
-                }
-                // set summary
-                mlistPref.setSummary(summaryMListPref);
             }
         }
     }
