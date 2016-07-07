@@ -1,62 +1,95 @@
 package ar.edu.unrn.lia.capacitacionhorizonte2.preference;
 
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
+import android.preference.SwitchPreference;
+import android.util.Log;
+
+import java.util.Set;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-public class SettingsActivity extends  PreferenceActivity
-{
+public class SettingsActivity extends PreferenceActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingFragment()).commit();
 
-        //checkValues();
     }
 
-    public static class SettingFragment extends PreferenceFragment
-    {
+    public static class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final String TAG = SettingFragment.class.getSimpleName();
 
-        @BindView(R.id.user_name)
-        EditTextPreference userName;
+        SharedPreferences sharedPreferences;
+
 
         @Override
-        public void onCreate(final Bundle savedInstanceState)
-        {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.main);
 
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+
+
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.user_name_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_multiple_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.alert_email_address_key));
 
 
         }
+
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.i(TAG, "preference changed: " + key);
+
+            Preference preference = findPreference(key);
+            if (preference instanceof ListPreference) {
+                ListPreference listPreference = (ListPreference) preference;
+                int prefIndex = listPreference.findIndexOfValue(sharedPreferences.getString(key, ""));
+                if (prefIndex >= 0) {
+                    preference.setSummary(listPreference.getEntries()[prefIndex]);
+                }
+            } else if (preference instanceof EditTextPreference) {
+                preference.setSummary(sharedPreferences.getString(key, ""));
+            } else if (preference instanceof MultiSelectListPreference) {
+                MultiSelectListPreference pref = (MultiSelectListPreference) preference;
+                // MultiSelectList Preference
+                MultiSelectListPreference mlistPref = (MultiSelectListPreference) pref;
+                String summaryMListPref = "";
+                String and = "";
+
+                // Retrieve values
+                Set<String> values = mlistPref.getValues();
+                for (String value : values) {
+                    // For each value retrieve index
+                    int index = mlistPref.findIndexOfValue(value);
+                    // Retrieve entry from index
+                    CharSequence mEntry = index >= 0 && mlistPref.getEntries() != null ? mlistPref.getEntries()[index] : null;
+                    if (mEntry != null) {
+                        // add summary
+                        summaryMListPref = summaryMListPref + and + mEntry;
+                        and = ";";
+                    }
+                }
+                // set summary
+                mlistPref.setSummary(summaryMListPref);
+            }
+        }
     }
 
-    private void checkValues()
-    {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String strUserName = sharedPrefs.getString("user_name", "NA");
-        boolean bAppUpdates = sharedPrefs.getBoolean("alert_email",false);
-        String downloadType = sharedPrefs.getString("alert_email_address","1");
-
-        String msg = "Cur Values: ";
-        msg += "\n userName = " + strUserName;
-        msg += "\n bAppUpdates = " + bAppUpdates;
-        msg += "\n downloadType = " + downloadType;
-
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
-    }
 
 }

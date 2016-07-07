@@ -14,6 +14,10 @@
     <string name="ref_alert_email_adress_title">Email de Envio</string>
     <string name="pref_list_multi">Lista Multiple</string>
     <string name="pref_general_title">Configuracion de la Aplicacion</string>
+    <string name="user_name_key">user_name</string>
+    <string name="lista_opcion_key">lista_opcion</string>
+    <string name="lista_opcion_multiple_key">lista_opcion_multiple</string>
+    <string name="alert_email_address_key">alert_email_address</string>
 
 
     <string-array name="list_option_values">
