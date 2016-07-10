@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private static final String TAG = MainActivity.class.getCanonicalName();
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.content_main)
