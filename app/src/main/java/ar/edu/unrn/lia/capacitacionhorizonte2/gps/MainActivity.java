@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private static final String TAG = MainActivity.class.getCanonicalName();
+    private static final int REQUEST_LOCATION = 2;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        gotoCurrentLoactionGooglePlayService();
+        setupGoogleAPIClient();
         createLocationRequest();
 
         if (mGoogleApiClient.isConnected()) {
@@ -105,9 +106,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-        super.onStart();
         // Connect the client.
         mGoogleApiClient.connect();
+        super.onStart();
+
+
     }
 
     @Override
@@ -130,13 +133,16 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void gotoCurrentLoactionGooglePlayService() {
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
+
+    private void setupGoogleAPIClient() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .build();
+        }
     }
 
 
@@ -144,17 +150,18 @@ public class MainActivity extends AppCompatActivity implements
     public void onConnected(@Nullable Bundle bundle) {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLocation != null) {
-            // LatLng latLng = new LatLng(mLocationRequest.getLatitude(),mLocationRequest.getLongitude());
-            // mMap.addMarker(new MarkerOptions().position(latLng).title("Programmatically Current Loaction"));
-            // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            Toast.makeText(this, "getLatitude() = " + String.valueOf(mLocation.getLatitude()) + "\n getLongitude() = " + String.valueOf(mLocation.getLongitude()), Toast.LENGTH_LONG).show();
-        }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        }else{
+            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLocation != null) {
+                // LatLng latLng = new LatLng(mLocationRequest.getLatitude(),mLocationRequest.getLongitude());
+                // mMap.addMarker(new MarkerOptions().position(latLng).title("Programmatically Current Loaction"));
+                // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                Toast.makeText(this, "getLatitude() = " + String.valueOf(mLocation.getLatitude()) + "\n getLongitude() = " + String.valueOf(mLocation.getLongitude()), Toast.LENGTH_LONG).show();
+            }
 
-        startLocationUpdate();
+        }
 
     }
 
@@ -169,9 +176,11 @@ public class MainActivity extends AppCompatActivity implements
     private void startLocationUpdate() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        }else {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
     private void stopLocationUpdate() {
@@ -180,17 +189,20 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
         Log.i(TAG, "GoogleApiClient connection has been suspend");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Snackbar.make(container, connectionResult.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
         Log.i(TAG, "GoogleApiClient connection has failed");
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(this, "Location received: " + location.toString(), Toast.LENGTH_LONG).show();
+        this.mLocation = location;
+        Toast.makeText(this, "onLocationChanged: " + mLocation.toString(), Toast.LENGTH_LONG).show();
     }
 
 
