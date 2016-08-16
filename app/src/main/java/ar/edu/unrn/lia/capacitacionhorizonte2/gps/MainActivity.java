@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements
         gotoCurrentLoactionGooglePlayService();
         createLocationRequest();
 
+        if (mGoogleApiClient.isConnected()) {
+            startLocationUpdate();
+        }
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (mGoogleApiClient.isConnected()) {
-            startLocationUpdate();
-        }
 
     }
 
@@ -188,10 +190,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-
-
         Toast.makeText(this, "Location received: " + location.toString(), Toast.LENGTH_LONG).show();
-
     }
 
 
