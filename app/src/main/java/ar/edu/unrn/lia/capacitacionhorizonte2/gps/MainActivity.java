@@ -3,8 +3,10 @@ package ar.edu.unrn.lia.capacitacionhorizonte2.gps;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -17,6 +19,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,14 +41,18 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private static final String TAG = MainActivity.class.getCanonicalName();
-    private static final int REQUEST_LOCATION = 2;
+
+    static final int REQUEST_LOCATION = 2;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.content_main)
-    ConstraintLayout container;
+    RelativeLayout container;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.imgPreview)
+    ImageView imageView;
 
 
     private GoogleApiClient mGoogleApiClient = null;
@@ -72,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                dispatchTakePictureIntent();
+                Snackbar.make(view, "Tomar Foto", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -134,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
     private void setupGoogleAPIClient() {
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -151,8 +158,8 @@ public class MainActivity extends AppCompatActivity implements
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
-        }else{
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        } else {
             mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLocation != null) {
                 // LatLng latLng = new LatLng(mLocationRequest.getLatitude(),mLocationRequest.getLongitude());
@@ -160,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements
                 // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 Toast.makeText(this, "getLatitude() = " + String.valueOf(mLocation.getLatitude()) + "\n getLongitude() = " + String.valueOf(mLocation.getLongitude()), Toast.LENGTH_LONG).show();
             }
+
+            startLocationUpdate();
 
         }
 
@@ -177,8 +186,8 @@ public class MainActivity extends AppCompatActivity implements
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
-        }else {
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
@@ -205,5 +214,23 @@ public class MainActivity extends AppCompatActivity implements
         Toast.makeText(this, "onLocationChanged: " + mLocation.toString(), Toast.LENGTH_LONG).show();
     }
 
+
+    //Camara Hardware
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+        }
+    }
 
 }
