@@ -17,6 +17,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "GOOGLE_MAPS_API_KEY", project.property('GOOGLE_MAPS_API_KEY_PROD')
+        }
+        debug {
+            resValue "string", "GOOGLE_MAPS_API_KEY", project.property('GOOGLE_MAPS_API_KEY_DEV')
         }
     }
 }
@@ -33,7 +37,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     
-compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:preference-v7:24.2.0'
     compile 'com.android.support:preference-v14:24.2.0'
     compile 'com.android.support:design:24.2.0'
