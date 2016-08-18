@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import ar.edu.unrn.lia.capacitacionhorizonte2.MapsActivity;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
 import butterknife.BindView;
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }else  if (id == R.id.action_map) {
+            startActivity(new Intent(this, MapsActivity.class));
             return true;
         }
 
