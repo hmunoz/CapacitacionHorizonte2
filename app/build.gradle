@@ -3,7 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "ar.edu.unrn.lia.capacitacionhorizonte2"
         minSdkVersion 16
@@ -17,7 +17,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "GOOGLE_MAPS_API_KEY", project.property('GOOGLE_MAPS_API_KEY_PROD')
+    resValue "string", "GOOGLE_MAPS_API_KEY", project.property('GOOGLE_MAPS_API_KEY_PROD')
         }
         debug {
             resValue "string", "GOOGLE_MAPS_API_KEY", project.property('GOOGLE_MAPS_API_KEY_DEV')
@@ -41,7 +41,6 @@ dependencies {
     compile 'com.android.support:preference-v7:24.2.0'
     compile 'com.android.support:preference-v14:24.2.0'
     compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:support-vector-drawable:24.2.0'
     compile 'com.google.android.gms:play-services-location:9.4.0'

@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.user_name_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_multiple_key));
-            onSharedPreferenceChanged(sharedPreferences, getString(R.string.alert_email_address_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.notification_key));
         }
 
         @Override

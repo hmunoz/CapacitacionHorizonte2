@@ -31,6 +31,7 @@ import com.google.android.gms.location.LocationServices;
 import ar.edu.unrn.lia.capacitacionhorizonte2.maps.MapsActivity;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
+import ar.edu.unrn.lia.capacitacionhorizonte2.service.MyService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -67,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Iniciar Servicios
+        startService(new Intent(this, MyService.class));
         setupGoogleAPIClient();
         createLocationRequest();
 

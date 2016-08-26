@@ -13,17 +13,17 @@
             android:title="@string/pref_user_name_title" />
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="alert_email"
-            android:summaryOff="Envio de Email Activido."
-            android:summaryOn="Envio de Email Desactivado."
-            android:title="@string/pref_alert_email_title" />
+            android:key="alert_noti"
+            android:summaryOff="Notificaciones Desactivadas"
+            android:summaryOn="Notificaciones Actividas"
+            android:title="@string/notification" />
 
         <android.support.v7.preference.EditTextPreference
-            android:dependency="alert_email"
+            android:dependency="alert_noti"
             android:inputType="textEmailAddress"
-            android:key="alert_email_address"
+            android:key="alert_noti_time"
             android:layout="?android:attr/preferenceLayoutChild"
-            android:title="@string/ref_alert_email_adress_title" />
+            android:title="Tiempo de notificacion" />
 
         <android.support.v7.preference.ListPreference
             android:defaultValue="@string/flight_sort_option_default_value"
