@@ -54,7 +54,8 @@ public class MyService extends Service {
         @Override
         public void handleMessage(Message msg) {
             if (appCapacitacion.isActiveNotification()) {
-                displayNotification("Servicio Capacitacion", "Tiempo entre notificacion:" + appCapacitacion.getTimeNotificacion()/1000);
+                String msgContenido = String.format(getString(R.string.service_content_txt), appCapacitacion.getTimeNotificacion().toString());
+                displayNotification("Servicio Capacitacion", msgContenido);
             }
             this.postDelayed(msg.getCallback(),appCapacitacion.getTimeNotificacion());
             // Stop the service using the startId, so that we don't stop

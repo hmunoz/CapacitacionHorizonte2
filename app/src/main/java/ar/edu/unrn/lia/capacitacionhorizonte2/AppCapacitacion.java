@@ -27,7 +27,7 @@ public class AppCapacitacion extends Application {
         return sharedPref.getBoolean("alert_noti", true);
     }
 
-    public int getTimeNotificacion(){
+    public Integer getTimeNotificacion(){
         return Integer.parseInt(sharedPref.getString("alert_noti_time", "10"))*1000;
     }
 
