@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Iniciar Servicios
-        startService(new Intent(this, MyService.class));
+
         setupGoogleAPIClient();
         createLocationRequest();
 
@@ -111,6 +110,16 @@ public class MainActivity extends AppCompatActivity implements
         }else  if (id == R.id.action_map) {
             startActivity(new Intent(this, MapsActivity.class));
             return true;
+        }else if (id ==R.id.action_start_stope){
+            //Iniciar/Stop Servicios
+            Intent intent = new Intent(this,MyService.class);
+            if (MyService.isInstanceCreated()){
+                stopService(intent);
+            }else{
+                startService(intent);
+            }
+
+            return  true;
         }
 
         return super.onOptionsItemSelected(item);

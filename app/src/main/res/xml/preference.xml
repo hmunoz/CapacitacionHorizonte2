@@ -23,7 +23,7 @@
             android:inputType="textEmailAddress"
             android:key="alert_noti_time"
             android:layout="?android:attr/preferenceLayoutChild"
-            android:title="Tiempo de notificacion" />
+            android:title="Intervalo de Tiempo (Seg)" />
 
         <android.support.v7.preference.ListPreference
             android:defaultValue="@string/flight_sort_option_default_value"

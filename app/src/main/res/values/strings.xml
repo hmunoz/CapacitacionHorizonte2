@@ -19,6 +19,7 @@
     <string name="lista_opcion_multiple_key">lista_opcion_multiple</string>
     <string name="alert_email_address_key">alert_email_address</string>
     <string name="notification_key">alert_noti</string>
+    <string name="notification_time_key">alert_noti_time</string>
     <string name="notification">Mostrar Notificaciones </string>
 
     <string-array name="list_option_values">
@@ -39,4 +40,6 @@
     </string-array>
     <string name="title_activity_maps">Mapa</string>
     <string name="action_map">Mapa</string>
+    <string name="action_start_stope">Iniciar/Parar Servicio</string>
+
 </resources>
