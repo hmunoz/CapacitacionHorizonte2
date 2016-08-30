@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Indicaciones de Maquinchao 250, Viedma, Río Negro, Argentina a Mitre 561-599, R8500FHK Viedma, Río Negro, Argentina</name>
+		<Placemark>
+			<name>Indicaciones de Maquinchao 250, Viedma, Río Negro, Argentina a Mitre 561-599, R8500FHK Viedma, Río Negro, Argentina</name>
+			<styleUrl>#line-1267FF-5-nodesc</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>-63.00746000000001,-40.82204,0.0 -63.00677,-40.82153,0.0 -63.00661999999999,-40.82142,0.0 -63.00726,-40.82095,0.0 -63.00788,-40.82047,0.0 -63.008570000000006,-40.81987,0.0 -63.009100000000004,-40.81946,0.0 -63.00961000000001,-40.81908,0.0 -63.00976000000001,-40.81898,0.0 -63.010670000000005,-40.81832000000001,0.0 -63.011700000000005,-40.81753,0.0 -63.01106000000001,-40.81706,0.0 -63.01104,-40.81704,0.0 -63.01079000000001,-40.81684,0.0 -63.0111,-40.81659,0.0 -63.01175,-40.8161,0.0 -63.011970000000005,-40.81564,0.0 -63.011970000000005,-40.81562,0.0 -63.01196,-40.81561,0.0 -63.01196,-40.81559000000001,0.0 -63.01196,-40.81557,0.0 -63.01196,-40.81555,0.0 -63.01196,-40.81554,0.0 -63.01196,-40.81552,0.0 -63.011970000000005,-40.8155,0.0 -63.01172,-40.81524,0.0 -63.01166,-40.81521,0.0 -63.011520000000004,-40.81515,0.0 -63.01082000000001,-40.81481000000001,0.0 -63.00959999999999,-40.81428,0.0 -63.00838,-40.81372,0.0 -63.0078,-40.81346,0.0 -63.00714,-40.81316,0.0 -63.005919999999996,-40.81264,0.0 -63.00516,-40.8123,0.0 -63.00469,-40.81209,0.0 -63.00345,-40.81154,0.0 -63.00315,-40.81141,0.0 -63.00194,-40.81087,0.0 -63.00151,-40.81068,0.0 -63.00071,-40.81032,0.0 -62.999480000000005,-40.80976,0.0 -62.99824,-40.80921,0.0 -62.99703,-40.80867,0.0 -62.99664,-40.80849,0.0 -62.99612,-40.80826,0.0 -62.99602,-40.80821,0.0 -62.9959,-40.8082,0.0 -62.99586999999999,-40.80819,0.0 -62.99583,-40.80817,0.0 -62.99580000000001,-40.80816,0.0 -62.99578,-40.80816,0.0 -62.99485000000001,-40.80931,0.0 -62.99476000000001,-40.80943,0.0 -62.99430999999999,-40.81000000000001,0.0 -62.99374999999999,-40.81073,0.0 -62.99367000000001,-40.81083,0.0 -62.99296,-40.81174,0.0 -62.99288,-40.81185,0.0 -62.992070000000005,-40.8129,0.0 -62.99199000000001,-40.813,0.0 -62.99193000000001,-40.81298,0.0</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Maquinchao 250, Viedma, Río Negro, Argentina</name>
+			<styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+			<Point>
+				<coordinates>-63.007458699999994,-40.8220389,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Mitre 561-599, R8500FHK Viedma, Río Negro, Argentina</name>
+			<styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+			<Point>
+				<coordinates>-62.99193210000001,-40.8129757,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Style id='icon-503-DB4436-nodesc-normal'>
+			<IconStyle>
+				<color>ff3644DB</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-503-DB4436-nodesc-highlight'>
+			<IconStyle>
+				<color>ff3644DB</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-503-DB4436-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-DB4436-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-DB4436-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='line-1267FF-5-nodesc-normal'>
+			<LineStyle>
+				<color>ffFF6712</color>
+				<width>5</width>
+			</LineStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='line-1267FF-5-nodesc-highlight'>
+			<LineStyle>
+				<color>ffFF6712</color>
+				<width>8.0</width>
+			</LineStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='line-1267FF-5-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#line-1267FF-5-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#line-1267FF-5-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>
