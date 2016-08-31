@@ -61,6 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.lista_opcion_multiple_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.notification_key));
             onSharedPreferenceChanged(sharedPreferences, getString(R.string.notification_time_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.map_distance));
+            onSharedPreferenceChanged(sharedPreferences, getString(R.string.map_time_interval));
         }
 
         @Override

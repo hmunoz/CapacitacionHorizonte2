@@ -16,9 +16,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.common.ConnectionResult;
+
 import java.text.DateFormat;
 import java.util.Date;
+
 import ar.edu.unrn.lia.capacitacionhorizonte2.BaseActivityLocation;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.maps.MapsActivity;
@@ -26,10 +29,15 @@ import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
 import ar.edu.unrn.lia.capacitacionhorizonte2.service.MyService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MainActivity extends BaseActivityLocation{
+public class MainActivity extends BaseActivityLocation {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    @BindView(R.id.latitude)
+    TextView latitude;
+    @BindView(R.id.longitude)
+    TextView longitude;
 
     private String mLastUpdateTime;
     @BindView(R.id.toolbar)
@@ -46,7 +54,6 @@ public class MainActivity extends BaseActivityLocation{
     TextView longitudeTextview;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +62,6 @@ public class MainActivity extends BaseActivityLocation{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-                Snackbar.make(view, "Tomar Foto", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
 
 
     }
@@ -118,6 +116,13 @@ public class MainActivity extends BaseActivityLocation{
 
     //Camara Hardware
 
+
+    @OnClick(R.id.fab)
+    public void onClick() {
+        dispatchTakePictureIntent();
+        Snackbar.make(container, "Tomar Foto", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+    }
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -133,5 +138,6 @@ public class MainActivity extends BaseActivityLocation{
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
 
 }

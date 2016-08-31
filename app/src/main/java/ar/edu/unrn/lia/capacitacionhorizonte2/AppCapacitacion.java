@@ -31,4 +31,13 @@ public class AppCapacitacion extends Application {
         return Integer.parseInt(sharedPref.getString("alert_noti_time", "10"))*1000;
     }
 
+
+    public Integer getDistancia(){
+        return Integer.parseInt(sharedPref.getString("map_distance", "20"));
+    }
+
+    public Integer getTimeInterval(){
+        return Integer.parseInt(sharedPref.getString("map_time_interval", "1"))*1000;
+    }
+
 }

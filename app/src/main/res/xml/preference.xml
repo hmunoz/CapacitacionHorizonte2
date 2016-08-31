@@ -36,4 +36,26 @@
 
     </android.support.v7.preference.PreferenceCategory>
 
+
+    <android.support.v7.preference.PreferenceCategory
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/pref_map_title">
+
+
+        <android.support.v7.preference.EditTextPreference
+            android:id="@+id/map_distance"
+            android:key="map_distance"
+            android:summary="@string/ref_map_distance_summary"
+            android:title="@string/pref_map_distance_title" />
+
+        <android.support.v7.preference.EditTextPreference
+            android:id="@+id/map_time_interval"
+            android:key="map_time_interval"
+            android:summary="@string/ref_map_time_interval_summary"
+            android:title="@string/pref_map_time_interval_title" />
+
+
+
+    </android.support.v7.preference.PreferenceCategory>
+
 </android.support.v7.preference.PreferenceScreen>
