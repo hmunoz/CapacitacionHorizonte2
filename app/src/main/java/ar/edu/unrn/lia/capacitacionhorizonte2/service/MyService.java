@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
@@ -15,28 +16,30 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
 
 import java.text.Format;
 import java.util.concurrent.TimeUnit;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.AppCapacitacion;
+import ar.edu.unrn.lia.capacitacionhorizonte2.BaseServiceLocation;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.gps.MainActivity;
 
 //http://stackoverflow.com/questions/33000742/why-is-onlocationchanged-not-called-in-android-service
 
-public class MyService extends Service {
-
-    static final String TAG = MyService.class.getSimpleName();
+public class MyService extends BaseServiceLocation {
 
 
     private NotificationManager myNotificationManager;
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
-    private AppCapacitacion appCapacitacion;
 
     private static MyService instance = null;
 
@@ -67,12 +70,6 @@ public class MyService extends Service {
 
 
 
-
-
-
-    public MyService() {
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
@@ -83,9 +80,7 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         instance = this;
-        appCapacitacion = (AppCapacitacion) getApplicationContext();
 
         // Start up the thread running the service.  Note that we create a
         // separate thread because the service normally runs in the process's
@@ -99,10 +94,8 @@ public class MyService extends Service {
         mServiceHandler = new ServiceHandler(mServiceLooper);
 
 
-
         Log.i(TAG, "Servicio Creando");
         Toast.makeText(MyService.this, "Servicio Creando", Toast.LENGTH_SHORT).show();
-
 
     }
 
@@ -131,6 +124,16 @@ public class MyService extends Service {
         Toast.makeText(MyService.this, "Servicio Destruido", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i(TAG,"Location error:" +connectionResult.getErrorMessage());
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+            Log.i(TAG,"Location:" +location.getLatitude() + "");
+            broadcastActionLocation(location.getLatitude() + "");
+    }
 
 
     protected void displayNotification(String titulo, String contenido) {
@@ -175,5 +178,17 @@ public class MyService extends Service {
 
     }
 
+
+
+    public static final String BROADCAST_ACTION_SERVICE = "ar.edu.unrn.lia.capacitacionhorizonte2.broadcast_action.LOCATION";
+    public static final String EXTRA_PARAM = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM";
+
+    // called to send data to Activity
+    public static void broadcastActionLocation(String param) {
+        Intent intent = new Intent(BROADCAST_ACTION_SERVICE);
+        intent.putExtra(EXTRA_PARAM, param);
+        LocalBroadcastManager bm = LocalBroadcastManager.getInstance(instance);
+        bm.sendBroadcast(intent);
+    }
 
 }

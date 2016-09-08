@@ -1,6 +1,9 @@
 package ar.edu.unrn.lia.capacitacionhorizonte2.gps;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -52,6 +56,19 @@ public class MainActivity extends BaseActivityLocation {
     TextView latitudeTextview;
     @BindView(R.id.longitude_textview)
     TextView longitudeTextview;
+    LocalBroadcastManager bm;
+
+    // handler for received data from service
+    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MyService.BROADCAST_ACTION_SERVICE)) {
+                final String param = intent.getStringExtra(MyService.EXTRA_PARAM);
+                Snackbar.make(container, "Form Service: "+param, Snackbar.LENGTH_SHORT).show();
+
+            }
+        }
+    };
 
 
     @Override
@@ -63,7 +80,18 @@ public class MainActivity extends BaseActivityLocation {
         setSupportActionBar(toolbar);
 
 
+        //Reciver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyService.BROADCAST_ACTION_SERVICE);
+        bm = LocalBroadcastManager.getInstance(this);
+        bm.registerReceiver(mBroadcastReceiver, filter);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        bm.unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 
     @Override
