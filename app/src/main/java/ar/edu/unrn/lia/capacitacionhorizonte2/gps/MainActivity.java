@@ -30,7 +30,7 @@ import ar.edu.unrn.lia.capacitacionhorizonte2.BaseActivityLocation;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.maps.MapsActivity;
 import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
-import ar.edu.unrn.lia.capacitacionhorizonte2.service.MyService;
+import ar.edu.unrn.lia.capacitacionhorizonte2.service.LocationService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,13 +62,14 @@ public class MainActivity extends BaseActivityLocation {
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(MyService.BROADCAST_ACTION_SERVICE)) {
-                final String param = intent.getStringExtra(MyService.EXTRA_PARAM);
+            if (intent.getAction().equals(LocationService.BROADCAST_ACTION_SERVICE)) {
+                final String param = intent.getStringExtra(LocationService.EXTRA_PARAM);
                 Snackbar.make(container, "Form Service: "+param, Snackbar.LENGTH_SHORT).show();
-
             }
         }
     };
+
+
 
 
     @Override
@@ -80,9 +81,9 @@ public class MainActivity extends BaseActivityLocation {
         setSupportActionBar(toolbar);
 
 
-        //Reciver
+        //Reciver filter Java o XML
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MyService.BROADCAST_ACTION_SERVICE);
+        filter.addAction(LocationService.BROADCAST_ACTION_SERVICE);
         bm = LocalBroadcastManager.getInstance(this);
         bm.registerReceiver(mBroadcastReceiver, filter);
 
@@ -112,8 +113,8 @@ public class MainActivity extends BaseActivityLocation {
             return true;
         } else if (id == R.id.action_start_stope) {
             //Iniciar/Stop Servicios
-            Intent intent = new Intent(this, MyService.class);
-            if (MyService.isInstanceCreated()) {
+            Intent intent = new Intent(this, LocationService.class);
+            if (LocationService.isInstanceCreated()) {
                 stopService(intent);
             } else {
                 startService(intent);

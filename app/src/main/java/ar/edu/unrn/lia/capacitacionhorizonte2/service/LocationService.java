@@ -34,14 +34,14 @@ import ar.edu.unrn.lia.capacitacionhorizonte2.gps.MainActivity;
 
 //http://stackoverflow.com/questions/33000742/why-is-onlocationchanged-not-called-in-android-service
 
-public class MyService extends BaseServiceLocation {
+public class LocationService extends BaseServiceLocation {
 
 
     private NotificationManager myNotificationManager;
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
 
-    private static MyService instance = null;
+    private static LocationService instance = null;
 
     public static boolean isInstanceCreated() {
         return instance != null;
@@ -95,7 +95,7 @@ public class MyService extends BaseServiceLocation {
 
 
         Log.i(TAG, "Servicio Creando");
-        Toast.makeText(MyService.this, "Servicio Creando", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LocationService.this, "Servicio Creando", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -103,7 +103,7 @@ public class MyService extends BaseServiceLocation {
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
         Log.i(TAG, "Intent received");
-        Toast.makeText(MyService.this, "Servicio Iniciado", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LocationService.this, "Servicio Iniciado", Toast.LENGTH_SHORT).show();
 
         Message  msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
@@ -121,7 +121,7 @@ public class MyService extends BaseServiceLocation {
         instance = null;
         super.onDestroy();
         Log.i(getClass().getSimpleName(), "Servicio Destruido");
-        Toast.makeText(MyService.this, "Servicio Destruido", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LocationService.this, "Servicio Destruido", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -55,7 +55,7 @@
             android:label="@string/title_activity_maps"></activity>
 
         <service
-            android:name=".service.MyService"
+            android:name=".service.LocationService"
             android:enabled="true"
             android:exported="true">
 

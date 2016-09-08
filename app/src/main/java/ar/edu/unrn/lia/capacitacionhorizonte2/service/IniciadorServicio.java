@@ -11,7 +11,7 @@ public class IniciadorServicio extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Intent serviceIntent = new Intent(context,MyService.class);
+        Intent serviceIntent = new Intent(context,LocationService.class);
         context.startService(serviceIntent);
 
     }

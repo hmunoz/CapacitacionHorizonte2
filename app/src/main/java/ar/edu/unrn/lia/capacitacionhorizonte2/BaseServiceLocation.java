@@ -1,6 +1,7 @@
 package ar.edu.unrn.lia.capacitacionhorizonte2;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -75,6 +76,7 @@ public abstract class BaseServiceLocation extends Service implements
             mGoogleApiClient.disconnect();
         }
     }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
