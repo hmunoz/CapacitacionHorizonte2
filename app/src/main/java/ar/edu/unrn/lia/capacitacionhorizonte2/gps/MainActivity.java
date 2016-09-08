@@ -56,18 +56,7 @@ public class MainActivity extends BaseActivityLocation {
     TextView latitudeTextview;
     @BindView(R.id.longitude_textview)
     TextView longitudeTextview;
-    LocalBroadcastManager bm;
 
-    // handler for received data from service
-    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(LocationService.BROADCAST_ACTION_SERVICE)) {
-                final String param = intent.getStringExtra(LocationService.EXTRA_PARAM);
-                Snackbar.make(container, "Form Service: "+param, Snackbar.LENGTH_SHORT).show();
-            }
-        }
-    };
 
 
 
@@ -79,21 +68,9 @@ public class MainActivity extends BaseActivityLocation {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        //Reciver filter Java o XML
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(LocationService.BROADCAST_ACTION_SERVICE);
-        bm = LocalBroadcastManager.getInstance(this);
-        bm.registerReceiver(mBroadcastReceiver, filter);
-
     }
 
-    @Override
-    protected void onDestroy() {
-        bm.unregisterReceiver(mBroadcastReceiver);
-        super.onDestroy();
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

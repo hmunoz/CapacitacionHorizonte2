@@ -132,7 +132,7 @@ public class LocationService extends BaseServiceLocation {
     @Override
     public void onLocationChanged(Location location) {
             Log.i(TAG,"Location:" +location.getLatitude() + "");
-            broadcastActionLocation(location.getLatitude() + "");
+            broadcastActionLocation(location);
     }
 
 
@@ -183,12 +183,14 @@ public class LocationService extends BaseServiceLocation {
     //Reciver
 
     public static final String BROADCAST_ACTION_SERVICE = "ar.edu.unrn.lia.capacitacionhorizonte2.broadcast_action.LOCATION";
-    public static final String EXTRA_PARAM = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM";
+    public static final String EXTRA_PARAM_LAT = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LAT";
+    public static final String EXTRA_PARAM_LNG = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LNG";
 
     // called to send data to Activity
-    public static void broadcastActionLocation(String param) {
+    public static void broadcastActionLocation(Location location) {
         Intent intent = new Intent(BROADCAST_ACTION_SERVICE);
-        intent.putExtra(EXTRA_PARAM, param);
+        intent.putExtra(EXTRA_PARAM_LAT,location.getLatitude());
+        intent.putExtra(EXTRA_PARAM_LNG,location.getLongitude());
         LocalBroadcastManager bm = LocalBroadcastManager.getInstance(instance);
         bm.sendBroadcast(intent);
     }
