@@ -180,6 +180,8 @@ public class LocationService extends BaseServiceLocation {
 
 
 
+    //Reciver
+
     public static final String BROADCAST_ACTION_SERVICE = "ar.edu.unrn.lia.capacitacionhorizonte2.broadcast_action.LOCATION";
     public static final String EXTRA_PARAM = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM";
 
