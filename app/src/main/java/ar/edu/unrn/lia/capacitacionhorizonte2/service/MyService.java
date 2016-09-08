@@ -26,7 +26,7 @@ import ar.edu.unrn.lia.capacitacionhorizonte2.AppCapacitacion;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.gps.MainActivity;
 
-
+//http://stackoverflow.com/questions/33000742/why-is-onlocationchanged-not-called-in-android-service
 
 public class MyService extends Service {
 
