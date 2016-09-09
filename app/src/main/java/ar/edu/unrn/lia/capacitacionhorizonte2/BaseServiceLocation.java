@@ -1,24 +1,19 @@
 package ar.edu.unrn.lia.capacitacionhorizonte2;
 
 import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import ar.edu.unrn.lia.capacitacionhorizonte2.gps.MainActivity;
 
 
 /**
@@ -30,6 +25,7 @@ public abstract class BaseServiceLocation extends Service implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private static BaseServiceLocation instance = null;
 
     protected String TAG;
     protected GoogleApiClient mGoogleApiClient;
@@ -39,14 +35,29 @@ public abstract class BaseServiceLocation extends Service implements
     protected AppCapacitacion appCapacitacion;
 
 
+    public static BaseServiceLocation getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(BaseServiceLocation instance) {
+        BaseServiceLocation.instance = instance;
+    }
+
     @Override
     public void onCreate() {
+        setInstance(this);
         TAG = this.getClass().getSimpleName();
         appCapacitacion = (AppCapacitacion) getApplicationContext();
         setupGoogleAPIClient();
-
         mGoogleApiClient.connect();
+
+        Log.i(TAG, "Servicio Creando");
     }
+
+    public static boolean isInstanceCreated() {
+        return getInstance() != null;
+    }
+
 
 
     protected synchronized void setupGoogleAPIClient() {
@@ -67,14 +78,14 @@ public abstract class BaseServiceLocation extends Service implements
 
 
 
-
-
     @Override
     public void onDestroy() {
+        setInstance(null);
         super.onDestroy();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+        Log.i(getClass().getSimpleName(), "Servicio Destruido");
     }
 
 
@@ -107,4 +118,7 @@ public abstract class BaseServiceLocation extends Service implements
 
 
     public abstract void onLocationChanged(Location location);
+
+
+
 }

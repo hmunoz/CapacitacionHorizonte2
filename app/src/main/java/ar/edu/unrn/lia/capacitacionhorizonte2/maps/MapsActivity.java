@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import ar.edu.unrn.lia.capacitacionhorizonte2.BaseActivityLocation;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
+import ar.edu.unrn.lia.capacitacionhorizonte2.preference.SettingsActivity;
 import ar.edu.unrn.lia.capacitacionhorizonte2.service.LocationService;
 
 public class MapsActivity extends FragmentActivity implements
@@ -70,6 +73,39 @@ public class MapsActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
     }
 
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.action_map) {
+            startActivity(new Intent(this, MapsActivity.class));
+            return true;
+        } else if (id == R.id.action_start_stope) {
+            //Iniciar/Stop Servicios
+            Intent intent = new Intent(this, LocationService.class);
+            if (LocationService.isInstanceCreated()) {
+                stopService(intent);
+            } else {
+                startService(intent);
+            }
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {

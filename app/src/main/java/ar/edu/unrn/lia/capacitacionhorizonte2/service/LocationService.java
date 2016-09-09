@@ -21,13 +21,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
-
-import java.text.Format;
-import java.util.concurrent.TimeUnit;
-
-import ar.edu.unrn.lia.capacitacionhorizonte2.AppCapacitacion;
 import ar.edu.unrn.lia.capacitacionhorizonte2.BaseServiceLocation;
 import ar.edu.unrn.lia.capacitacionhorizonte2.R;
 import ar.edu.unrn.lia.capacitacionhorizonte2.gps.MainActivity;
@@ -41,11 +35,6 @@ public class LocationService extends BaseServiceLocation {
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
 
-    private static LocationService instance = null;
-
-    public static boolean isInstanceCreated() {
-        return instance != null;
-    }
 
 
 
@@ -69,7 +58,6 @@ public class LocationService extends BaseServiceLocation {
 
 
 
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
@@ -80,7 +68,6 @@ public class LocationService extends BaseServiceLocation {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
 
         // Start up the thread running the service.  Note that we create a
         // separate thread because the service normally runs in the process's
@@ -94,34 +81,26 @@ public class LocationService extends BaseServiceLocation {
         mServiceHandler = new ServiceHandler(mServiceLooper);
 
 
-        Log.i(TAG, "Servicio Creando");
-        Toast.makeText(LocationService.this, "Servicio Creando", Toast.LENGTH_SHORT).show();
+
 
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
-        Log.i(TAG, "Intent received");
-        Toast.makeText(LocationService.this, "Servicio Iniciado", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onStartCommand");
 
         Message  msg = mServiceHandler.obtainMessage();
-        msg.arg1 = startId;
+        //msg.arg1 = startId;
         mServiceHandler.sendMessage(msg);
 
-
-
-        // If we get killed, after returning from here, restart
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         mServiceLooper.quit();
-        instance = null;
         super.onDestroy();
-        Log.i(getClass().getSimpleName(), "Servicio Destruido");
-        Toast.makeText(LocationService.this, "Servicio Destruido", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -189,7 +168,6 @@ public class LocationService extends BaseServiceLocation {
 
 
     //Reciver
-
     public static final String BROADCAST_ACTION_SERVICE = "ar.edu.unrn.lia.capacitacionhorizonte2.broadcast_action.LOCATION";
     public static final String EXTRA_PARAM_LAT = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LAT";
     public static final String EXTRA_PARAM_LNG = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LNG";
@@ -199,7 +177,7 @@ public class LocationService extends BaseServiceLocation {
         Intent intent = new Intent(BROADCAST_ACTION_SERVICE);
         intent.putExtra(EXTRA_PARAM_LAT,location.getLatitude());
         intent.putExtra(EXTRA_PARAM_LNG,location.getLongitude());
-        LocalBroadcastManager bm = LocalBroadcastManager.getInstance(instance);
+        LocalBroadcastManager bm = LocalBroadcastManager.getInstance(getInstance());
         bm.sendBroadcast(intent);
     }
 
