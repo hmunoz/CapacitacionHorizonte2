@@ -76,36 +76,7 @@ public class MapsActivity extends FragmentActivity implements
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        } else if (id == R.id.action_map) {
-            startActivity(new Intent(this, MapsActivity.class));
-            return true;
-        } else if (id == R.id.action_start_stope) {
-            //Iniciar/Stop Servicios
-            Intent intent = new Intent(this, LocationService.class);
-            if (LocationService.isInstanceCreated()) {
-                stopService(intent);
-            } else {
-                startService(intent);
-            }
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onDestroy() {
