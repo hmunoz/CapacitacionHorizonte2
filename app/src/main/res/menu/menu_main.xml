@@ -17,4 +17,10 @@
         android:orderInCategory="120"
         android:title="@string/action_start_stope"
         app:showAsAction="never" />
+
+    <item android:id="@+id/search"
+        android:title="@string/search_title"
+        android:icon="@drawable/places_ic_search"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView" />
 </menu>

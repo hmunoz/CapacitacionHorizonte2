@@ -146,6 +146,12 @@ public class LocationService extends BaseServiceLocation {
         mBuilder.setSmallIcon(R.drawable.ic_info_black_24dp);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_info_black_24dp));
         mBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("Test"))
+                .addAction (R.drawable.ic_media_pause,
+                        getString(R.string.dismiss), null)
+                .addAction (R.drawable.ic_info_black_24dp,
+                        getString(R.string.snooze), null);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         mBuilder.setSound(uri);
@@ -173,7 +179,9 @@ public class LocationService extends BaseServiceLocation {
         // pass the Notification object to the system
         myNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        myNotificationManager.notify(1, mBuilder.build());
+        // Sets an ID for the notification
+        int mNotificationId = 001;
+        myNotificationManager.notify(mNotificationId, mBuilder.build());
 
 
     }

@@ -9,6 +9,7 @@
         <android.support.v7.preference.EditTextPreference
             android:id="@+id/user_name"
             android:key="user_name"
+            android:defaultValue="@string/ref_user_name_default"
             android:summary="@string/ref_user_name_summary"
             android:title="@string/pref_user_name_title" />
 

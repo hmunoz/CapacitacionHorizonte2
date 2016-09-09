@@ -53,4 +53,9 @@
 
     <string name="map_distance">map_distance</string>
     <string name="map_time_interval">map_time_interval</string>
+
+    <string name="ref_user_name_default">Texto default</string>
+    <string name="dismiss">dismiss</string>
+    <string name="snooze">snooze</string>
+    <string name="search_title">Buscar</string>
 </resources>

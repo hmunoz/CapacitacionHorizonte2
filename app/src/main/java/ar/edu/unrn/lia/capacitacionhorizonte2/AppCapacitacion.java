@@ -22,6 +22,9 @@ public class AppCapacitacion extends Application {
     }
 
 
+    public String username(){
+        return sharedPref.getString("user_name", getString(R.string.ref_user_name_default));
+    }
 
     public boolean isActiveNotification(){
         return sharedPref.getBoolean("alert_noti", true);
