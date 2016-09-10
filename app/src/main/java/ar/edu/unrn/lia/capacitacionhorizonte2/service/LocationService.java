@@ -91,7 +91,7 @@ public class LocationService extends BaseServiceLocation {
         Log.i(TAG, "onStartCommand");
 
         Message  msg = mServiceHandler.obtainMessage();
-        //msg.arg1 = startId;
+        msg.arg1 = startId;
         mServiceHandler.sendMessage(msg);
 
         return START_STICKY;
@@ -125,12 +125,8 @@ public class LocationService extends BaseServiceLocation {
         mBuilder.setSmallIcon(R.drawable.ic_info_black_24dp);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_info_black_24dp));
         mBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+        //mBuilder.setLights()
 
-        mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("Test"))
-                .addAction (R.drawable.ic_media_pause,
-                        getString(R.string.dismiss), null)
-                .addAction (R.drawable.ic_info_black_24dp,
-                        getString(R.string.snooze), null);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         mBuilder.setSound(uri);
@@ -138,6 +134,7 @@ public class LocationService extends BaseServiceLocation {
         //mBuilder.setNumber(++numMessagesOne);
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra("data", "Notifico");
         // resultIntent.putExtra("notificationId", notificationIdOne);
         //This ensures that navigating backward from the Activity leads out of the app to Home page
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -150,6 +147,12 @@ public class LocationService extends BaseServiceLocation {
         stackBuilder.addNextIntent(resultIntent);
 
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);//can only be used once
+
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("Test"))
+                .addAction (R.drawable.ic_media_pause,
+                        getString(R.string.dismiss), resultPendingIntent)
+                .addAction (R.drawable.ic_info_black_24dp,
+                        getString(R.string.snooze), resultPendingIntent);
 
         // start the activity when the user clicks the notification text
         mBuilder.setContentIntent(resultPendingIntent);
@@ -171,12 +174,14 @@ public class LocationService extends BaseServiceLocation {
     public static final String BROADCAST_ACTION_SERVICE = "ar.edu.unrn.lia.capacitacionhorizonte2.broadcast_action.LOCATION";
     public static final String EXTRA_PARAM_LAT = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LAT";
     public static final String EXTRA_PARAM_LNG = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LNG";
+    public static final String EXTRA_PARAM_LOCATION = "ar.edu.unrn.lia.capacitacionhorizonte2.extra.PARAM_LNG";
 
     // called to send data to Activity
     public static void broadcastActionLocation(Location location) {
         Intent intent = new Intent(BROADCAST_ACTION_SERVICE);
         intent.putExtra(EXTRA_PARAM_LAT,location.getLatitude());
         intent.putExtra(EXTRA_PARAM_LNG,location.getLongitude());
+        //intent.putExtra(EXTRA_PARAM_LOCATION,location);
         LocalBroadcastManager bm = LocalBroadcastManager.getInstance(getInstance());
         bm.sendBroadcast(intent);
     }

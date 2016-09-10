@@ -65,6 +65,14 @@ public class MainActivity extends BaseActivityLocation {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            Log.i(TAG,this.getIntent().getStringExtra("data"));
+            Snackbar.make(container,this.getIntent().getStringExtra("data"),Snackbar.LENGTH_SHORT).show();
+        }catch (Exception e){
+
+        }
+
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

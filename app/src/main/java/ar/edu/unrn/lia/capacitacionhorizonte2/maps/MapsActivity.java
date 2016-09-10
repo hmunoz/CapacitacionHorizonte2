@@ -50,22 +50,37 @@ public class MapsActivity extends FragmentActivity implements
             if (intent.getAction().equals(LocationService.BROADCAST_ACTION_SERVICE)) {
                 final LatLng latLngCurrent = new LatLng(intent.getDoubleExtra(LocationService.EXTRA_PARAM_LAT, 0D),
                         intent.getDoubleExtra(LocationService.EXTRA_PARAM_LNG, 0D));
+
+
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLngCurrent, 17);
                 mMap.animateCamera(cameraUpdate);
+            }else if(intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")){
+                Log.i(TAG,"onReceive SMS_RECEIVED");
+
+            }else if(intent.getAction().equals("android.provider.Telephony.SMS_SENT")){
+                Log.i(TAG,"onReceive SMS_SENT");
+
             }
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         context = this;
+        bm = LocalBroadcastManager.getInstance(this);
+
 
         //Reciver filter Java o XML
         IntentFilter filter = new IntentFilter();
         filter.addAction(LocationService.BROADCAST_ACTION_SERVICE);
-        bm = LocalBroadcastManager.getInstance(this);
+        filter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        filter.addAction("android.provider.Telephony.SMS_SENT");
+        filter.setPriority(1000);
         bm.registerReceiver(mBroadcastReceiver, filter);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
